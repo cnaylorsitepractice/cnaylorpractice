@@ -1,1346 +1,272 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>NEON DASH</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- TODO: Set the document title to the name of your application -->
+    <title>Lovable App</title>
+    <meta name="description" content="Lovable Generated Project">
+    <meta name="author" content="Lovable" />
+
+    <!-- TODO: Update og:title to match your application name -->
+    
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a89e009f-55bc-4802-85a6-4c75833a5681/id-preview-b0302c5c--414bd1a8-94fb-4566-ae23-158ea15f7117.lovable.app-1774533878238.png">
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Lovable" />
+    <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a89e009f-55bc-4802-85a6-4c75833a5681/id-preview-b0302c5c--414bd1a8-94fb-4566-ae23-158ea15f7117.lovable.app-1774533878238.png">
+    <meta property="og:title" content="Lovable App">
+  <meta name="twitter:title" content="Lovable App">
+  <meta property="og:description" content="Lovable Generated Project">
+  <meta name="twitter:description" content="Lovable Generated Project">
+  <script type="module" crossorigin src="/assets/index-PHfevXyo.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DnokBL4P.css">
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+	@font-face {
+		font-family: 'CameraPlainVariable';
+		src: url('https://cdn.gpteng.co/mcp-widgets/v1/fonts/CameraPlainVariable.woff2') format('woff2');
+		font-weight: 100 900;
+		font-style: normal;
+		font-display: swap;
+	}
 
-  :root {
-    --neon-cyan: #00f5ff;
-    --neon-pink: #ff006e;
-    --neon-yellow: #ffbe0b;
-    --neon-purple: #8338ec;
-    --neon-green: #06d6a0;
-    --dark: #050510;
-    --darker: #020208;
-    --panel: rgba(0,245,255,0.05);
-    --border: rgba(0,245,255,0.2);
-  }
+	#lovable-badge {
+		--badge-bg: #1b1b1b;
+		--badge-text: #c5c1b9;
+		--badge-text-hover: #dcdad5;
+		--badge-radius: 6px;
+		--badge-padding: 8px;
+		--badge-gap: 6px;
+		--badge-shadow: 
+			0 0 0 1px rgba(0, 0, 0, 0.88),
+			0 1px 0 0 rgba(0, 0, 0, 0.04),
+			0 2px 2px -1px rgba(0, 0, 0, 0.08),
+			0 4px 4px -2px rgba(0, 0, 0, 0.08),
+			0 8px 8px -4px rgba(0, 0, 0, 0.08),
+			0 16px 16px -8px rgba(0, 0, 0, 0.08);
+		--badge-transition-duration: 0.2s;
+		--badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
+		--focus-color: #575ECF;
+		--focus-offset: 2px;
+		--focus-width: 2px;
+		
+		position: fixed;
+		bottom: 12px;
+		right: 12px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		z-index: 1000000;
+		background-color: var(--badge-bg);
+		color: var(--badge-text);
+		border-radius: var(--badge-radius);
+		box-shadow: var(--badge-shadow);
+		font-size: 12px;
+		font-family: CameraPlainVariable, "CameraPlainVariable Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-weight: 400 !important;
+		text-transform: none !important;
+		font-feature-settings: normal !important;
+		transform: translateZ(0);
+		will-change: transform, opacity;
+	}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+	#lovable-badge-cta {
+		display: flex;
+		align-items: center;
+		gap: var(--badge-gap);
+		padding: 0 var(--badge-padding);
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+		white-space: nowrap;
+		border-radius: var(--badge-radius) 0 0 var(--badge-radius);
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
 
-  body {
-    background: var(--dark);
-    font-family: 'Orbitron', monospace;
-    color: var(--neon-cyan);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    touch-action: none;
-  }
+	#lovable-badge-cta:hover {
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--badge-text-hover);
+	}
 
-  canvas {
-    display: block;
-    image-rendering: pixelated;
-  }
+	#lovable-badge-cta:active {
+		transform: scale(0.98);
+	}
 
-  /* SCREENS */
-  .screen {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: var(--dark);
-    z-index: 10;
-    padding: 20px;
-  }
+	#lovable-badge-cta:focus {
+		outline: none;
+	}
 
-  .screen.hidden { display: none; }
+	#lovable-badge-cta:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: var(--focus-offset);
+		z-index: 1;
+	}
 
-  /* TITLE SCREEN */
-  .title-logo {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    font-weight: 900;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 20px rgba(0,245,255,0.6));
-    animation: titlePulse 2s ease-in-out infinite;
-    margin-bottom: 8px;
-  }
+	#lovable-badge-text {
+		line-height: 1;
+	}
 
-  @keyframes titlePulse {
-    0%, 100% { filter: drop-shadow(0 0 20px rgba(0,245,255,0.6)); }
-    50% { filter: drop-shadow(0 0 40px rgba(255,0,110,0.8)); }
-  }
+	#lovable-badge-divider {
+		width: 1px;
+		height: 24px;
+		background-color: rgba(255, 255, 255, 0.04);
+		flex-shrink: 0;
+	}
 
-  .title-sub {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: clamp(0.6rem, 2vw, 0.9rem);
-    color: rgba(0,245,255,0.5);
-    letter-spacing: 0.3em;
-    margin-bottom: 40px;
-  }
+	#lovable-badge-close {
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		min-height: 24px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
+		flex-shrink: 0;
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
 
-  .grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,245,255,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,245,255,0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: gridScroll 20s linear infinite;
-  }
+	#lovable-badge-close:hover {
+		background: rgba(255, 255, 255, 0.04);
+	}
 
-  @keyframes gridScroll {
-    0% { background-position: 0 0; }
-    100% { background-position: 0 40px; }
-  }
+	#lovable-badge-close:active {
+		transform: scale(0.92);
+	}
 
-  .scan-line {
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.1) 2px,
-      rgba(0,0,0,0.1) 4px
-    );
-    pointer-events: none;
-  }
+	#lovable-badge-close:focus {
+		outline: none;
+	}
 
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    max-width: 320px;
-    margin-bottom: 24px;
-    position: relative;
-    z-index: 1;
-  }
+	#lovable-badge-close:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: calc(var(--focus-offset) * -1);
+		z-index: 1;
+	}
 
-  .input-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: rgba(0,245,255,0.6);
-  }
+	#lovable-badge-close svg path {
+		fill: var(--badge-text);
+		transition: fill var(--badge-transition-duration) ease;
+	}
 
-  .neon-input {
-    width: 100%;
-    background: rgba(0,245,255,0.05);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 12px 16px;
-    color: var(--neon-cyan);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 1rem;
-    outline: none;
-    transition: all 0.3s;
-  }
+	#lovable-badge-close:hover svg path {
+		fill: var(--badge-text-hover);
+	}
 
-  .neon-input:focus {
-    border-color: var(--neon-cyan);
-    background: rgba(0,245,255,0.1);
-    box-shadow: 0 0 20px rgba(0,245,255,0.2), inset 0 0 10px rgba(0,245,255,0.05);
-  }
+	@media (prefers-reduced-motion: reduce) {
+		#lovable-badge-cta,
+		#lovable-badge-close,
+		#lovable-badge-close svg path {
+			transition: none;
+		}
+		
+		#lovable-badge-cta:active,
+		#lovable-badge-close:active {
+			transform: none;
+		}
+	}
 
-  .btn {
-    padding: 14px 32px;
-    border: none;
-    border-radius: 4px;
-    font-family: 'Orbitron', monospace;
-    font-weight: 700;
-    font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-    letter-spacing: 0.15em;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    position: relative;
-    z-index: 1;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-    color: var(--dark);
-    box-shadow: 0 0 20px rgba(0,245,255,0.4);
-    width: 100%;
-    max-width: 320px;
-  }
-
-  .btn-primary:hover, .btn-primary:active {
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(0,245,255,0.7);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--neon-cyan);
-    border: 1px solid var(--border);
-    width: 100%;
-    max-width: 320px;
-    margin-top: 8px;
-  }
-
-  .btn-secondary:hover, .btn-secondary:active {
-    background: rgba(0,245,255,0.1);
-    border-color: var(--neon-cyan);
-  }
-
-  /* LEADERBOARD */
-  .leaderboard-panel {
-    width: 100%;
-    max-width: 380px;
-    max-height: 55vh;
-    overflow-y: auto;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .lb-header {
-    display: grid;
-    grid-template-columns: 40px 1fr 80px 80px;
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: rgba(0,245,255,0.4);
-    position: sticky;
-    top: 0;
-    background: rgba(5,5,16,0.95);
-  }
-
-  .lb-row {
-    display: grid;
-    grid-template-columns: 40px 1fr 80px 80px;
-    padding: 10px 16px;
-    border-bottom: 1px solid rgba(0,245,255,0.05);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.75rem;
-    align-items: center;
-    transition: background 0.2s;
-  }
-
-  .lb-row:hover { background: rgba(0,245,255,0.05); }
-
-  .lb-row.me { background: rgba(0,245,255,0.08); color: var(--neon-yellow); }
-  .lb-row.rank-1 .rank { color: gold; }
-  .lb-row.rank-2 .rank { color: silver; }
-  .lb-row.rank-3 .rank { color: #cd7f32; }
-
-  .rank { font-weight: 700; text-align: center; }
-  .username { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .lb-score, .lb-dist { text-align: right; font-size: 0.7rem; color: rgba(0,245,255,0.7); }
-
-  .screen-title {
-    font-size: clamp(1rem, 4vw, 1.5rem);
-    letter-spacing: 0.2em;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-    color: var(--neon-yellow);
-  }
-
-  /* HUD */
-  #hud {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    padding: 10px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    pointer-events: none;
-    z-index: 5;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .hud-block {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .hud-label {
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    color: rgba(0,245,255,0.4);
-  }
-
-  .hud-val {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: clamp(0.8rem, 3vw, 1.1rem);
-    color: var(--neon-cyan);
-    text-shadow: 0 0 10px rgba(0,245,255,0.8);
-  }
-
-  #powerup-display {
-    position: absolute;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    pointer-events: none;
-    z-index: 5;
-  }
-
-  .pu-badge {
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    animation: pulseBadge 0.5s ease-in-out infinite alternate;
-    white-space: nowrap;
-  }
-
-  @keyframes pulseBadge {
-    0% { transform: scale(1); opacity: 0.9; }
-    100% { transform: scale(1.05); opacity: 1; }
-  }
-
-  .pu-shield { background: rgba(6,214,160,0.2); border: 1px solid var(--neon-green); color: var(--neon-green); }
-  .pu-speed { background: rgba(255,190,11,0.2); border: 1px solid var(--neon-yellow); color: var(--neon-yellow); }
-  .pu-magnet { background: rgba(131,56,236,0.2); border: 1px solid var(--neon-purple); color: var(--neon-purple); }
-
-  /* MOBILE CONTROLS */
-  #mobile-controls {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 90px;
-    display: none;
-    z-index: 5;
-  }
-
-  #tap-left, #tap-right {
-    position: absolute;
-    bottom: 0;
-    height: 100%;
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    opacity: 0.3;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  #tap-left { left: 0; border-right: 1px solid rgba(0,245,255,0.1); }
-  #tap-right { right: 0; }
-
-  .tap-hint {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .tap-icon { font-size: 1.4rem; }
-
-  #gameCanvas { position: absolute; inset: 0; }
-
-  /* GAME OVER */
-  .go-score {
-    font-size: clamp(2rem, 8vw, 3.5rem);
-    font-weight: 900;
-    color: var(--neon-yellow);
-    text-shadow: 0 0 30px rgba(255,190,11,0.8);
-    margin: 12px 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  .go-stats {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 24px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.8rem;
-    color: rgba(0,245,255,0.6);
-    position: relative;
-    z-index: 1;
-  }
-
-  .go-stat span { color: var(--neon-cyan); font-weight: 700; }
-
-  .go-new-best {
-    color: gold;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    animation: flash 0.4s ease-in-out infinite alternate;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
-  }
-
-  @keyframes flash {
-    0% { opacity: 1; }
-    100% { opacity: 0.4; }
-  }
-
-  #gameWrapper {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-  }
-
-  .controls-hint {
-    position: relative;
-    z-index: 1;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.55rem;
-    color: rgba(0,245,255,0.3);
-    letter-spacing: 0.1em;
-    text-align: center;
-    margin-top: 8px;
-  }
+	@media (prefers-contrast: high) {
+		#lovable-badge {
+			--badge-bg: #000;
+			--badge-text: #fff;
+			--badge-text-hover: #fff;
+			border: 2px solid currentColor;
+		}
+		
+		#lovable-badge-cta:focus-visible,
+		#lovable-badge-close:focus-visible {
+			outline-width: 3px;
+		}
+	}
 </style>
-</head>
-<body>
+<script defer src="https://neon-rhythm-blast.lovable.app/~flock.js" data-proxy-url="https://neon-rhythm-blast.lovable.app/~api/analytics"></script></head>
 
-<!-- TITLE SCREEN -->
-<div id="titleScreen" class="screen">
-  <div class="grid-bg"></div>
-  <div class="scan-line"></div>
-  <div class="title-logo">NEON DASH</div>
-  <div class="title-sub">▸ SURVIVE THE GRID ◂</div>
-  <div class="input-group">
-    <div class="input-label">▸ PILOT CALLSIGN</div>
-    <input class="neon-input" id="usernameInput" type="text" maxlength="16" placeholder="Enter username..." autocomplete="off" spellcheck="false">
-  </div>
-  <button class="btn btn-primary" id="startBtn">▶ LAUNCH</button>
-  <button class="btn btn-secondary" id="lbBtn">⬛ LEADERBOARD</button>
-  <div class="controls-hint">SPACE/↑ JUMP &nbsp;|&nbsp; Z/X SHOOT &nbsp;|&nbsp; MOBILE: TAP LEFT/RIGHT</div>
-</div>
+  <body>
+    <div id="root"></div>
+  
+<aside 
+	id="lovable-badge" 
+	role="complementary"
+	dir="ltr"
+	lang="en"
+	aria-label="Edit with Lovable">
+	<a 
+		id="lovable-badge-cta" 
+		target="_blank" 
+		href="https://lovable.dev/projects/414bd1a8-94fb-4566-ae23-158ea15f7117?utm_source=lovable-badge"
+		rel="noopener"
+		aria-label="Edit with Lovable">
+		<span id="lovable-badge-text">Edit with</span>
+		<svg xmlns="http://www.w3.org/2000/svg" width="52" height="16" fill="none" viewBox="0 0 52 16">
+  <path fill="#FCFBF8" fill-rule="evenodd" d="M20.318 5.25c.643 0 1.206.14 1.69.418a2.81 2.81 0 0 1 1.118 1.191c.266.513.4 1.115.4 1.807s-.134 1.296-.4 1.812a2.81 2.81 0 0 1-1.118 1.193c-.484.278-1.047.418-1.69.418s-1.208-.14-1.695-.418a2.85 2.85 0 0 1-1.125-1.193c-.262-.516-.393-1.12-.393-1.812s.131-1.294.393-1.807a2.848 2.848 0 0 1 1.125-1.191c.487-.279 1.052-.418 1.695-.418Zm0 1.425c-.27 0-.504.076-.7.228-.193.147-.34.37-.443.67-.102.295-.153.66-.153 1.093 0 .435.05.801.153 1.1.102.3.25.524.443.676.196.147.43.22.7.22.27 0 .502-.073.694-.22.193-.152.341-.375.443-.67.103-.299.153-.667.153-1.106 0-.65-.112-1.145-.337-1.481a1.08 1.08 0 0 0-.953-.51ZM32.7 5.25c.61 0 1.127.1 1.549.3.422.197.74.48.953.849.217.368.325.809.325 1.32v2.704c0 .29.02.562.062.812.044.245.108.4.19.466V12h-1.935a5.895 5.895 0 0 1-.105-.684 7.745 7.745 0 0 1-.02-.228 2.293 2.293 0 0 1-.151.203c-.205.242-.47.437-.793.584-.32.143-.685.215-1.094.215-.406 0-.77-.08-1.094-.24a1.845 1.845 0 0 1-.756-.682 1.984 1.984 0 0 1-.27-1.045c0-.606.178-1.069.535-1.388.356-.324.87-.534 1.542-.633l1.125-.16c.225-.032.403-.074.534-.123a.622.622 0 0 0 .288-.196.549.549 0 0 0 .093-.327.65.65 0 0 0-.11-.367.702.702 0 0 0-.32-.27c-.14-.07-.31-.105-.51-.105-.32 0-.576.083-.768.251-.193.164-.298.39-.314.676h-1.923c.016-.434.147-.82.393-1.155.25-.34.596-.604 1.039-.792.442-.189.954-.283 1.535-.283Zm.99 3.498a.98.98 0 0 1-.215.14 2.49 2.49 0 0 1-.584.178l-.473.092c-.315.061-.553.156-.713.283-.155.127-.233.305-.233.534 0 .23.084.412.252.547.168.135.383.203.645.203s.494-.058.694-.173c.201-.118.355-.282.461-.49.11-.21.166-.448.166-.714v-.6Zm4.526-2.375c.065-.125.138-.243.221-.349.197-.25.437-.44.719-.571.282-.135.6-.203.952-.203.528 0 .988.138 1.377.412.389.275.688.67.896 1.186.21.512.314 1.12.314 1.824 0 .7-.107 1.309-.32 1.825-.213.512-.518.906-.915 1.18-.393.275-.854.412-1.383.412-.352 0-.667-.062-.946-.184a1.832 1.832 0 0 1-.7-.554 2.2 2.2 0 0 1-.234-.383V12h-1.843V3h1.862v3.373Zm1.284.296c-.274 0-.51.085-.707.253-.192.163-.338.397-.436.7a3.376 3.376 0 0 0-.148 1.05c0 .406.05.759.148 1.058.098.299.243.53.436.694.197.164.433.246.707.246.279 0 .512-.082.7-.246.193-.164.336-.395.43-.694.099-.3.148-.652.148-1.058 0-.405-.05-.757-.147-1.056-.095-.299-.238-.53-.43-.694a1.015 1.015 0 0 0-.7-.253Zm9.416-1.419c.602 0 1.136.131 1.604.393.466.262.829.643 1.086 1.143.263.5.394 1.097.394 1.794 0 .25-.002.449-.006.596H47.51c.018.288.071.538.164.75a1.3 1.3 0 0 0 .491.596c.214.13.465.196.757.196.319 0 .583-.082.792-.246.209-.167.34-.403.393-.706h1.862a2.48 2.48 0 0 1-.485 1.235 2.54 2.54 0 0 1-1.051.805c-.439.188-.949.283-1.53.283-.655 0-1.225-.125-1.708-.375a2.672 2.672 0 0 1-1.13-1.143c-.267-.508-.4-1.137-.4-1.887 0-.712.14-1.327.418-1.843a2.86 2.86 0 0 1 1.155-1.186c.491-.27 1.051-.405 1.678-.405Zm-.044 1.345c-.274 0-.516.068-.725.203a1.29 1.29 0 0 0-.479.59 2.045 2.045 0 0 0-.132.498h2.562a1.873 1.873 0 0 0-.138-.602 1.061 1.061 0 0 0-.418-.516 1.243 1.243 0 0 0-.67-.173Z" clip-rule="evenodd"/>
+  <path fill="#FCFBF8" d="m26.605 9.995 1.342-4.566h1.924L27.628 12h-2.07l-2.33-6.57h1.98l1.397 4.565Zm-13.013.143h2.256c1.632 0 1.421 1.837 1.418 1.861h-5.603V3h1.93v7.138Zm31.516 1.861h-1.862V3h1.862v8.999Z"/>
+  <path fill="url(#a)" fill-rule="evenodd" d="M2.7 3c1.492 0 2.7 1.192 2.7 2.663v1.012h.9c1.49 0 2.7 1.192 2.7 2.662S7.791 12 6.3 12H0V5.663C0 4.193 1.209 3 2.7 3Z" clip-rule="evenodd"/>
+  <defs>
+    <radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="matrix(-1.54236 7.07838 -10.231 -2.15602 4.627 5.022)" gradientUnits="userSpaceOnUse">
+      <stop offset=".106" stop-color="#FE7B02"/>
+      <stop offset=".394" stop-color="#FE3F21"/>
+      <stop offset=".608" stop-color="#F858BC"/>
+      <stop offset=".929" stop-color="#575ECF"/>
+    </radialGradient>
+  </defs>
+</svg>
 
-<!-- LEADERBOARD SCREEN -->
-<div id="lbScreen" class="screen hidden">
-  <div class="grid-bg"></div>
-  <div class="scan-line"></div>
-  <div class="screen-title">⬛ LEADERBOARD</div>
-  <div class="leaderboard-panel" id="lbPanel">
-    <div class="lb-header">
-      <div>#</div><div>PILOT</div><div>SCORE</div><div>DIST</div>
-    </div>
-    <div id="lbList"></div>
-  </div>
-  <button class="btn btn-secondary" id="lbBackBtn">◂ BACK</button>
-</div>
 
-<!-- GAME OVER SCREEN -->
-<div id="gameOverScreen" class="screen hidden">
-  <div class="grid-bg"></div>
-  <div class="scan-line"></div>
-  <div class="screen-title" style="color:var(--neon-pink)">✕ SIGNAL LOST</div>
-  <div class="go-score" id="goScore">0</div>
-  <div class="go-stats">
-    <div>DIST: <span id="goDist">0</span>m</div>
-    <div>COINS: <span id="goCoins">0</span></div>
-    <div>BEST: <span id="goBest">0</span></div>
-  </div>
-  <div class="go-new-best hidden" id="goNewBest">★ NEW RECORD ★</div>
-  <button class="btn btn-primary" id="retryBtn">▶ RETRY</button>
-  <button class="btn btn-secondary" id="goLbBtn">⬛ LEADERBOARD</button>
-  <button class="btn btn-secondary" id="goMenuBtn">◂ MENU</button>
-</div>
-
-<!-- GAME -->
-<div id="gameWrapper" class="hidden">
-  <canvas id="gameCanvas"></canvas>
-  <div id="hud">
-    <div class="hud-block">
-      <div class="hud-label">SCORE</div>
-      <div class="hud-val" id="hudScore">0</div>
-    </div>
-    <div class="hud-block" style="text-align:center">
-      <div class="hud-label">PILOT</div>
-      <div class="hud-val" id="hudUser" style="font-size:0.7rem;color:rgba(0,245,255,0.7)">—</div>
-    </div>
-    <div class="hud-block" style="text-align:right">
-      <div class="hud-label">COINS</div>
-      <div class="hud-val" id="hudCoins" style="color:var(--neon-yellow)">0</div>
-    </div>
-  </div>
-  <div id="powerup-display"></div>
-  <div id="mobile-controls">
-    <div id="tap-left"><div class="tap-hint"><div class="tap-icon">⬆</div><div>JUMP</div></div></div>
-    <div id="tap-right"><div class="tap-hint"><div class="tap-icon">💥</div><div>SHOOT</div></div></div>
-  </div>
-</div>
-
+	</a>
+	
+	<span id="lovable-badge-divider" aria-hidden="true"></span>
+	
+	<button 
+		id="lovable-badge-close"
+		aria-label="Dismiss"
+		title="Dismiss"
+		type="button">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+			<path d="M10.646 4.646a.5.5 0 1 1 .707.708L8.707 8l2.646 2.646a.5.5 0 1 1-.707.707L8 8.707l-2.646 2.646a.5.5 0 1 1-.708-.707L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708L8 7.293l2.646-2.647Z"/>
+		</svg>
+	</button>
+</aside>
 <script>
-// ============================================================
-//  NEON DASH — Game Engine
-// ============================================================
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-
-// State
-let username = 'PILOT';
-let gameState = 'title'; // title | playing | dead
-let score = 0, coins = 0, dist = 0, bestScore = 0;
-let frame = 0;
-let gameSpeed = 4;
-let raf;
-
-// Player
-const PLAYER = {
-  x: 80, y: 0, w: 28, h: 28,
-  vy: 0, onGround: false,
-  jumps: 0, maxJumps: 2,
-  shield: false, shieldTimer: 0,
-  speedBoost: false, speedTimer: 0,
-  magnet: false, magnetTimer: 0,
-  invincible: false, invTimer: 0,
-  trail: []
-};
-
-// Game objects
-let obstacles = [];
-let powerups = [];
-let coins_arr = [];
-let particles = [];
-let ghosts = [];
-let bullets = [];
-let bgStars = [];
-
-// Ground
-let GY; // ground y
-
-// ============================================================
-//  LEADERBOARD
-// ============================================================
-function getLB() {
-  try { return JSON.parse(localStorage.getItem('neonDashLB') || '[]'); }
-  catch(e) { return []; }
-}
-
-function saveLB(lb) {
-  localStorage.setItem('neonDashLB', JSON.stringify(lb));
-}
-
-function submitScore(name, s, d, c) {
-  let lb = getLB();
-  lb.push({ name, score: s, dist: d, coins: c, date: Date.now() });
-  lb.sort((a, b) => b.score - a.score);
-  lb = lb.slice(0, 50);
-  saveLB(lb);
-  return lb;
-}
-
-function renderLB(currentUser) {
-  const lb = getLB();
-  const list = document.getElementById('lbList');
-  if (lb.length === 0) {
-    list.innerHTML = '<div style="padding:20px;text-align:center;color:rgba(0,245,255,0.3);font-family:Share Tech Mono,monospace;font-size:0.75rem">NO DATA YET</div>';
-    return;
-  }
-  list.innerHTML = lb.map((e, i) => {
-    const isMe = e.name === currentUser;
-    const rankClass = i < 3 ? `rank-${i+1}` : '';
-    return `<div class="lb-row ${isMe ? 'me' : ''} ${rankClass}">
-      <div class="rank">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i+1}</div>
-      <div class="username">${e.name}</div>
-      <div class="lb-score">${e.score.toLocaleString()}</div>
-      <div class="lb-dist">${e.dist}m</div>
-    </div>`;
-  }).join('');
-}
-
-// ============================================================
-//  SCREENS
-// ============================================================
-function showScreen(id) {
-  ['titleScreen','lbScreen','gameOverScreen','gameWrapper'].forEach(s => {
-    const el = document.getElementById(s);
-    if (el) el.classList.toggle('hidden', s !== id);
-  });
-}
-
-document.getElementById('startBtn').onclick = () => {
-  const u = document.getElementById('usernameInput').value.trim();
-  username = u || 'PILOT';
-  document.getElementById('usernameInput').value = username;
-  startGame();
-};
-
-document.getElementById('usernameInput').onkeydown = e => {
-  if (e.key === 'Enter') document.getElementById('startBtn').click();
-};
-
-document.getElementById('lbBtn').onclick = () => {
-  renderLB(username);
-  showScreen('lbScreen');
-};
-
-document.getElementById('lbBackBtn').onclick = () => showScreen('titleScreen');
-document.getElementById('retryBtn').onclick = () => startGame();
-document.getElementById('goLbBtn').onclick = () => { renderLB(username); showScreen('lbScreen'); };
-document.getElementById('goMenuBtn').onclick = () => showScreen('titleScreen');
-
-// ============================================================
-//  RESIZE
-// ============================================================
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  GY = canvas.height - 80;
-  PLAYER.y = GY - PLAYER.h;
-  if (bgStars.length === 0) initBgStars();
-}
-window.addEventListener('resize', resize);
-resize();
-
-// ============================================================
-//  BG STARS
-// ============================================================
-function initBgStars() {
-  bgStars = [];
-  for (let i = 0; i < 80; i++) {
-    bgStars.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * (GY - 40),
-      r: Math.random() * 1.5 + 0.3,
-      speed: Math.random() * 1.5 + 0.3,
-      alpha: Math.random() * 0.5 + 0.2
-    });
-  }
-}
-
-// ============================================================
-//  INIT GAME
-// ============================================================
-function startGame() {
-  score = 0; coins = 0; dist = 0; frame = 0; gameSpeed = 4;
-  obstacles = []; powerups = []; coins_arr = []; particles = []; bullets = [];
-
-  PLAYER.y = GY - PLAYER.h;
-  PLAYER.vy = 0; PLAYER.onGround = true; PLAYER.jumps = 0;
-  PLAYER.shield = false; PLAYER.shieldTimer = 0;
-  PLAYER.speedBoost = false; PLAYER.speedTimer = 0;
-  PLAYER.magnet = false; PLAYER.magnetTimer = 0;
-  PLAYER.invincible = false; PLAYER.invTimer = 0;
-  PLAYER.trail = [];
-
-  initGhosts();
-  initBgStars();
-  showScreen('gameWrapper');
-  document.getElementById('hudUser').textContent = username.toUpperCase().slice(0,12);
-  checkMobile();
-  gameState = 'playing';
-
-  if (raf) cancelAnimationFrame(raf);
-  loop();
-}
-
-function checkMobile() {
-  const isMobile = /Android|iPhone|iPad|iPod|Touch/i.test(navigator.userAgent) || window.innerWidth < 600;
-  document.getElementById('mobile-controls').style.display = isMobile ? 'flex' : 'none';
-}
-
-// ============================================================
-//  GHOSTS
-// ============================================================
-function initGhosts() {
-  ghosts = [];
-  for (let i = 0; i < 6; i++) {
-    ghosts.push({
-      x: Math.random() * canvas.width,
-      y: 40 + Math.random() * (GY - 120),
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.3 + Math.random() * 0.5,
-      alpha: 0.04 + Math.random() * 0.08,
-      size: 18 + Math.random() * 24,
-      hue: Math.random() > 0.5 ? 280 : 260
-    });
-  }
-}
-
-// ============================================================
-//  SPAWN LOGIC
-// ============================================================
-let nextObstacleAt = 180;
-let nextCoinAt = 60;
-let nextPowerupAt = 400;
-
-function spawnObstacle() {
-  const types = ['spike', 'wall', 'orb'];
-  const W = canvas.width;
-  let type = types[Math.floor(Math.random() * types.length)];
-
-  if (type === 'spike') {
-    const count = Math.floor(Math.random() * 3) + 1;
-    for (let i = 0; i < count; i++) {
-      obstacles.push({
-        type: 'spike',
-        x: W + i * 30,
-        y: GY - 32,
-        w: 26, h: 32
-      });
-    }
-  } else if (type === 'wall') {
-    const h = 50 + Math.random() * 60;
-    const gap = 90 + Math.random() * 40;
-    const gapY = 80 + Math.random() * (GY - h - gap - 100);
-    // top wall
-    obstacles.push({ type: 'wall', x: W, y: 0, w: 28, h: gapY });
-    // bottom wall
-    obstacles.push({ type: 'wall', x: W, y: gapY + gap, w: 28, h: GY - gapY - gap });
-  } else if (type === 'orb') {
-    obstacles.push({
-      type: 'orb',
-      x: W,
-      y: 100 + Math.random() * (GY - 180),
-      r: 16,
-      phase: Math.random() * Math.PI * 2,
-      amp: 30 + Math.random() * 40,
-      speed: 0.04 + Math.random() * 0.03
-    });
-  }
-}
-
-function spawnCoin() {
-  const W = canvas.width;
-  const count = Math.floor(Math.random() * 5) + 3;
-  const startY = 80 + Math.random() * (GY - 160);
-  const pattern = Math.random();
-  for (let i = 0; i < count; i++) {
-    let cx, cy;
-    if (pattern < 0.5) { // horizontal line
-      cx = W + i * 28;
-      cy = startY;
-    } else { // arc
-      const angle = (i / (count - 1)) * Math.PI;
-      cx = W + i * 26;
-      cy = startY + Math.sin(angle) * 50;
-    }
-    coins_arr.push({ x: cx, y: cy, r: 8, collected: false, phase: Math.random() * Math.PI * 2 });
-  }
-}
-
-function spawnPowerup() {
-  const W = canvas.width;
-  const types = ['shield', 'speed', 'magnet'];
-  const type = types[Math.floor(Math.random() * types.length)];
-  powerups.push({
-    type,
-    x: W,
-    y: 80 + Math.random() * (GY - 160),
-    r: 14,
-    phase: Math.random() * Math.PI * 2
-  });
-}
-
-// ============================================================
-//  PHYSICS
-// ============================================================
-const GRAVITY = 0.55;
-const JUMP_VEL = -12;
-
-function jump() {
-  if (PLAYER.jumps < PLAYER.maxJumps) {
-    PLAYER.vy = JUMP_VEL;
-    PLAYER.jumps++;
-    spawnParticles(PLAYER.x + PLAYER.w/2, PLAYER.y + PLAYER.h, 8, '#00f5ff', 3);
-  }
-}
-
-function shoot() {
-  bullets.push({
-    x: PLAYER.x + PLAYER.w,
-    y: PLAYER.y + PLAYER.h / 2,
-    w: 16, h: 5,
-    speed: 16
-  });
-  spawnParticles(PLAYER.x + PLAYER.w, PLAYER.y + PLAYER.h/2, 5, '#ffbe0b', 2);
-}
-
-// ============================================================
-//  PARTICLES
-// ============================================================
-function spawnParticles(x, y, n, color, speed) {
-  for (let i = 0; i < n; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const s = speed * (0.5 + Math.random());
-    particles.push({
-      x, y,
-      vx: Math.cos(angle) * s,
-      vy: Math.sin(angle) * s,
-      life: 1,
-      decay: 0.05 + Math.random() * 0.04,
-      r: 2 + Math.random() * 3,
-      color
-    });
-  }
-}
-
-// ============================================================
-//  COLLISION
-// ============================================================
-function rectRect(ax, ay, aw, ah, bx, by, bw, bh) {
-  return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
-}
-
-function circRect(cx, cy, cr, rx, ry, rw, rh) {
-  const nearX = Math.max(rx, Math.min(cx, rx + rw));
-  const nearY = Math.max(ry, Math.min(cy, ry + rh));
-  const dx = cx - nearX, dy = cy - nearY;
-  return dx * dx + dy * dy < cr * cr;
-}
-
-// ============================================================
-//  POWERUP HUD
-// ============================================================
-function updatePowerupHUD() {
-  const el = document.getElementById('powerup-display');
-  const badges = [];
-  if (PLAYER.shield) badges.push(`<div class="pu-badge pu-shield">🛡 SHIELD ${Math.ceil(PLAYER.shieldTimer/60)}s</div>`);
-  if (PLAYER.speedBoost) badges.push(`<div class="pu-badge pu-speed">⚡ BOOST ${Math.ceil(PLAYER.speedTimer/60)}s</div>`);
-  if (PLAYER.magnet) badges.push(`<div class="pu-badge pu-magnet">🧲 MAGNET ${Math.ceil(PLAYER.magnetTimer/60)}s</div>`);
-  el.innerHTML = badges.join('');
-}
-
-// ============================================================
-//  GAME OVER
-// ============================================================
-function triggerDeath() {
-  if (PLAYER.shield) {
-    PLAYER.shield = false; PLAYER.shieldTimer = 0;
-    PLAYER.invincible = true; PLAYER.invTimer = 90;
-    spawnParticles(PLAYER.x + PLAYER.w/2, PLAYER.y + PLAYER.h/2, 20, '#06d6a0', 5);
-    return;
-  }
-  if (PLAYER.invincible) return;
-
-  gameState = 'dead';
-  spawnParticles(PLAYER.x + PLAYER.w/2, PLAYER.y + PLAYER.h/2, 30, '#ff006e', 6);
-
-  let lb = getLB();
-  const prevBest = lb.filter(e => e.name === username).reduce((m, e) => Math.max(m, e.score), 0);
-  submitScore(username, score, Math.floor(dist), coins);
-  bestScore = Math.max(bestScore, score);
-
-  document.getElementById('goScore').textContent = score.toLocaleString();
-  document.getElementById('goDist').textContent = Math.floor(dist);
-  document.getElementById('goCoins').textContent = coins;
-  document.getElementById('goBest').textContent = bestScore.toLocaleString();
-  document.getElementById('goNewBest').classList.toggle('hidden', score <= prevBest);
-
-  setTimeout(() => showScreen('gameOverScreen'), 600);
-}
-
-// ============================================================
-//  MAIN LOOP
-// ============================================================
-function loop() {
-  raf = requestAnimationFrame(loop);
-  update();
-  draw();
-}
-
-function update() {
-  if (gameState !== 'playing') return;
-  frame++;
-
-  // Speed ramp
-  gameSpeed = 4 + Math.floor(frame / 600) * 0.5;
-  const spd = PLAYER.speedBoost ? gameSpeed * 1.6 : gameSpeed;
-
-  // Score
-  score += PLAYER.speedBoost ? 3 : 2;
-  dist += spd / 60;
-
-  // HUD
-  document.getElementById('hudScore').textContent = score.toLocaleString();
-  document.getElementById('hudCoins').textContent = coins;
-
-  // Player trail
-  PLAYER.trail.unshift({ x: PLAYER.x + PLAYER.w/2, y: PLAYER.y + PLAYER.h/2 });
-  if (PLAYER.trail.length > 12) PLAYER.trail.pop();
-
-  // Physics
-  PLAYER.vy += GRAVITY;
-  PLAYER.y += PLAYER.vy;
-
-  if (PLAYER.y >= GY - PLAYER.h) {
-    PLAYER.y = GY - PLAYER.h;
-    PLAYER.vy = 0;
-    PLAYER.onGround = true;
-    PLAYER.jumps = 0;
-  } else {
-    PLAYER.onGround = false;
-  }
-
-  // Powerup timers
-  if (PLAYER.shieldTimer > 0) PLAYER.shieldTimer--;
-  else PLAYER.shield = false;
-  if (PLAYER.speedTimer > 0) PLAYER.speedTimer--;
-  else PLAYER.speedBoost = false;
-  if (PLAYER.magnetTimer > 0) PLAYER.magnetTimer--;
-  else PLAYER.magnet = false;
-  if (PLAYER.invTimer > 0) PLAYER.invTimer--;
-  else PLAYER.invincible = false;
-
-  updatePowerupHUD();
-
-  // Spawn
-  nextObstacleAt--;
-  if (nextObstacleAt <= 0) {
-    spawnObstacle();
-    nextObstacleAt = Math.floor(80 + Math.random() * 80 - frame/200);
-    nextObstacleAt = Math.max(nextObstacleAt, 50);
-  }
-  nextCoinAt--;
-  if (nextCoinAt <= 0) {
-    spawnCoin();
-    nextCoinAt = Math.floor(40 + Math.random() * 60);
-  }
-  nextPowerupAt--;
-  if (nextPowerupAt <= 0) {
-    spawnPowerup();
-    nextPowerupAt = Math.floor(300 + Math.random() * 300);
-  }
-
-  // Move obstacles
-  for (let i = obstacles.length - 1; i >= 0; i--) {
-    const o = obstacles[i];
-    o.x -= spd;
-    if (o.type === 'orb') {
-      o.phase += o.speed;
-      o.y += Math.sin(o.phase) * 1.2;
-    }
-    if (o.x < -80) { obstacles.splice(i, 1); continue; }
-
-    // Collision
-    if (!PLAYER.invincible) {
-      let hit = false;
-      if (o.type === 'spike') hit = rectRect(PLAYER.x+3, PLAYER.y+3, PLAYER.w-6, PLAYER.h-6, o.x, o.y, o.w, o.h);
-      else if (o.type === 'wall') hit = rectRect(PLAYER.x+3, PLAYER.y+3, PLAYER.w-6, PLAYER.h-6, o.x, o.y, o.w, o.h);
-      else if (o.type === 'orb') hit = circRect(o.x, o.y, o.r, PLAYER.x+4, PLAYER.y+4, PLAYER.w-8, PLAYER.h-8);
-      if (hit) { triggerDeath(); return; }
-    }
-  }
-
-  // Move bullets
-  for (let i = bullets.length - 1; i >= 0; i--) {
-    bullets[i].x += bullets[i].speed;
-    if (bullets[i].x > canvas.width + 20) { bullets.splice(i, 1); continue; }
-    // Bullet vs obstacle
-    for (let j = obstacles.length - 1; j >= 0; j--) {
-      const o = obstacles[j];
-      let hit = false;
-      if (o.type === 'spike' || o.type === 'wall') hit = rectRect(bullets[i].x, bullets[i].y - bullets[i].h/2, bullets[i].w, bullets[i].h, o.x, o.y, o.w, o.h);
-      else if (o.type === 'orb') hit = circRect(o.x, o.y, o.r, bullets[i].x, bullets[i].y - bullets[i].h/2, bullets[i].w, bullets[i].h);
-      if (hit) {
-        spawnParticles(o.type === 'orb' ? o.x : o.x + o.w/2, o.type === 'orb' ? o.y : o.y + o.h/2, 12,
-          o.type === 'spike' ? '#ff4444' : o.type === 'wall' ? '#ff8800' : '#8338ec', 4);
-        obstacles.splice(j, 1);
-        bullets.splice(i, 1);
-        score += 50;
-        break;
-      }
-    }
-  }
-
-  // Move coins
-  for (let i = coins_arr.length - 1; i >= 0; i--) {
-    const c = coins_arr[i];
-    if (c.collected) { coins_arr.splice(i, 1); continue; }
-    c.x -= spd;
-    c.phase += 0.08;
-    if (c.x < -20) { coins_arr.splice(i, 1); continue; }
-
-    // Magnet
-    if (PLAYER.magnet) {
-      const dx = (PLAYER.x + PLAYER.w/2) - c.x;
-      const dy = (PLAYER.y + PLAYER.h/2) - c.y;
-      const dist2 = Math.sqrt(dx*dx + dy*dy);
-      if (dist2 < 150) {
-        c.x += dx / dist2 * 5;
-        c.y += dy / dist2 * 5;
-      }
-    }
-
-    const px = PLAYER.x + PLAYER.w/2, py = PLAYER.y + PLAYER.h/2;
-    if (Math.sqrt((px-c.x)**2 + (py-c.y)**2) < c.r + 16) {
-      c.collected = true;
-      coins++;
-      score += 10;
-      spawnParticles(c.x, c.y, 6, '#ffbe0b', 3);
-    }
-  }
-
-  // Move powerups
-  for (let i = powerups.length - 1; i >= 0; i--) {
-    const p = powerups[i];
-    p.x -= spd;
-    p.phase += 0.05;
-    if (p.x < -20) { powerups.splice(i, 1); continue; }
-
-    const px = PLAYER.x + PLAYER.w/2, py = PLAYER.y + PLAYER.h/2;
-    if (Math.sqrt((px-p.x)**2 + (py-p.y)**2) < p.r + 18) {
-      if (p.type === 'shield') { PLAYER.shield = true; PLAYER.shieldTimer = 600; }
-      else if (p.type === 'speed') { PLAYER.speedBoost = true; PLAYER.speedTimer = 300; }
-      else if (p.type === 'magnet') { PLAYER.magnet = true; PLAYER.magnetTimer = 450; }
-      spawnParticles(p.x, p.y, 16,
-        p.type === 'shield' ? '#06d6a0' : p.type === 'speed' ? '#ffbe0b' : '#8338ec', 5);
-      powerups.splice(i, 1);
-    }
-  }
-
-  // Particles
-  for (let i = particles.length - 1; i >= 0; i--) {
-    const p = particles[i];
-    p.x += p.vx; p.y += p.vy;
-    p.vy += 0.1;
-    p.life -= p.decay;
-    if (p.life <= 0) particles.splice(i, 1);
-  }
-
-  // Ghosts
-  for (const g of ghosts) {
-    g.x -= g.speed;
-    g.phase += 0.02;
-    if (g.x < -60) g.x = canvas.width + 40;
-  }
-
-  // Stars
-  for (const s of bgStars) {
-    s.x -= s.speed * 0.4;
-    if (s.x < 0) s.x = canvas.width;
-  }
-}
-
-// ============================================================
-//  DRAW
-// ============================================================
-function draw() {
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-
-  // Background
-  const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
-  bgGrad.addColorStop(0, '#020212');
-  bgGrad.addColorStop(1, '#050525');
-  ctx.fillStyle = bgGrad;
-  ctx.fillRect(0, 0, W, H);
-
-  // Grid lines
-  ctx.strokeStyle = 'rgba(0,245,255,0.04)';
-  ctx.lineWidth = 1;
-  for (let x = ((-frame * (gameSpeed * 0.2)) % 60 + 60) % 60; x < W; x += 60) {
-    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, GY); ctx.stroke();
-  }
-  for (let y = 0; y < GY; y += 60) {
-    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-  }
-
-  // Stars
-  for (const s of bgStars) {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(200,220,255,${s.alpha})`;
-    ctx.fill();
-  }
-
-  // Ghosts
-  for (const g of ghosts) {
-    const gy2 = g.y + Math.sin(g.phase) * 15;
-    ctx.save();
-    ctx.globalAlpha = g.alpha;
-    ctx.fillStyle = `hsl(${g.hue}, 70%, 70%)`;
-    // Body
-    ctx.beginPath();
-    ctx.arc(g.x, gy2 - g.size * 0.3, g.size * 0.5, Math.PI, 0);
-    ctx.lineTo(g.x + g.size * 0.5, gy2 + g.size * 0.4);
-    // Wavy bottom
-    const ws = g.size / 3;
-    for (let k = 0; k < 3; k++) {
-      ctx.arc(g.x + g.size*0.5 - ws*(k+0.5)*2/3*3 + ws/2 - ws, gy2 + g.size * 0.4 + ws*0.3,
-        ws/2, 0, Math.PI, k%2===0);
-    }
-    ctx.closePath();
-    ctx.fill();
-    // Eyes
-    ctx.fillStyle = `rgba(0,0,30,0.5)`;
-    ctx.beginPath(); ctx.ellipse(g.x - g.size*0.15, gy2 - g.size*0.3, g.size*0.08, g.size*0.1, 0, 0, Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(g.x + g.size*0.15, gy2 - g.size*0.3, g.size*0.08, g.size*0.1, 0, 0, Math.PI*2); ctx.fill();
-    ctx.restore();
-  }
-
-  // Ground
-  const gGrad = ctx.createLinearGradient(0, GY, 0, H);
-  gGrad.addColorStop(0, '#00f5ff22');
-  gGrad.addColorStop(1, '#00f5ff05');
-  ctx.fillStyle = gGrad;
-  ctx.fillRect(0, GY, W, H - GY);
-
-  ctx.strokeStyle = '#00f5ff';
-  ctx.lineWidth = 2;
-  ctx.shadowColor = '#00f5ff';
-  ctx.shadowBlur = 8;
-  ctx.beginPath();
-  ctx.moveTo(0, GY);
-  ctx.lineTo(W, GY);
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-
-  // Ground grid tiles
-  ctx.strokeStyle = 'rgba(0,245,255,0.1)';
-  ctx.lineWidth = 1;
-  for (let x = ((-frame * (gameSpeed * 0.8)) % 40 + 40) % 40; x < W; x += 40) {
-    ctx.beginPath(); ctx.moveTo(x, GY); ctx.lineTo(x, H); ctx.stroke();
-  }
-
-  // Coins
-  for (const c of coins_arr) {
-    if (c.collected) continue;
-    const pulse = Math.sin(c.phase) * 2;
-    ctx.save();
-    ctx.shadowColor = '#ffbe0b';
-    ctx.shadowBlur = 10 + pulse;
-    ctx.fillStyle = '#ffbe0b';
-    ctx.beginPath();
-    ctx.arc(c.x, c.y, c.r + pulse * 0.3, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#fff8';
-    ctx.beginPath();
-    ctx.arc(c.x - c.r * 0.3, c.y - c.r * 0.3, c.r * 0.3, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-  }
-
-  // Powerups
-  for (const p of powerups) {
-    const bob = Math.sin(p.phase) * 5;
-    const icons = { shield: '🛡', speed: '⚡', magnet: '🧲' };
-    const colors = { shield: '#06d6a0', speed: '#ffbe0b', magnet: '#8338ec' };
-    ctx.save();
-    ctx.shadowColor = colors[p.type];
-    ctx.shadowBlur = 20;
-    // Glow ring
-    ctx.strokeStyle = colors[p.type];
-    ctx.lineWidth = 2;
-    ctx.globalAlpha = 0.5 + Math.sin(p.phase) * 0.3;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y + bob, p.r + 6, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.globalAlpha = 1;
-    // Icon
-    ctx.font = `${p.r * 1.6}px serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(icons[p.type], p.x, p.y + bob);
-    ctx.restore();
-  }
-
-  // Obstacles
-  for (const o of obstacles) {
-    ctx.save();
-    if (o.type === 'spike') {
-      ctx.shadowColor = '#ff4444';
-      ctx.shadowBlur = 12;
-      ctx.fillStyle = '#ff3333';
-      ctx.beginPath();
-      ctx.moveTo(o.x + o.w/2, o.y);
-      ctx.lineTo(o.x + o.w, o.y + o.h);
-      ctx.lineTo(o.x, o.y + o.h);
-      ctx.closePath();
-      ctx.fill();
-      ctx.strokeStyle = '#ff8888';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-    } else if (o.type === 'wall') {
-      ctx.shadowColor = '#ff8800';
-      ctx.shadowBlur = 15;
-      const wg = ctx.createLinearGradient(o.x, o.y, o.x + o.w, o.y);
-      wg.addColorStop(0, '#ff6600');
-      wg.addColorStop(1, '#ff9900');
-      ctx.fillStyle = wg;
-      ctx.fillRect(o.x, o.y, o.w, o.h);
-      ctx.strokeStyle = '#ffaa44';
-      ctx.lineWidth = 1.5;
-      ctx.strokeRect(o.x, o.y, o.w, o.h);
-    } else if (o.type === 'orb') {
-      ctx.shadowColor = '#8338ec';
-      ctx.shadowBlur = 20;
-      const og = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
-      og.addColorStop(0, '#cc88ff');
-      og.addColorStop(0.6, '#8338ec');
-      og.addColorStop(1, '#5500bb');
-      ctx.fillStyle = og;
-      ctx.beginPath();
-      ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#cc88ff';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      // Inner swirl
-      ctx.globalAlpha = 0.4;
-      ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(o.x - 4, o.y - 4, o.r * 0.4, 0.5, 2.5);
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  // Bullets
-  for (const b of bullets) {
-    ctx.save();
-    ctx.shadowColor = '#ffbe0b';
-    ctx.shadowBlur = 15;
-    const bg = ctx.createLinearGradient(b.x, b.y, b.x + b.w, b.y);
-    bg.addColorStop(0, 'transparent');
-    bg.addColorStop(0.4, '#ffbe0b');
-    bg.addColorStop(1, '#fff');
-    ctx.fillStyle = bg;
-    ctx.fillRect(b.x - b.w, b.y - b.h/2, b.w, b.h);
-    ctx.restore();
-  }
-
-  // Particles
-  for (const p of particles) {
-    ctx.save();
-    ctx.globalAlpha = p.life;
-    ctx.fillStyle = p.color;
-    ctx.shadowColor = p.color;
-    ctx.shadowBlur = 6;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-  }
-
-  // Player trail
-  for (let i = 0; i < PLAYER.trail.length; i++) {
-    const t = PLAYER.trail[i];
-    const alpha = (1 - i / PLAYER.trail.length) * 0.4;
-    const size = (1 - i / PLAYER.trail.length) * 10;
-    ctx.save();
-    ctx.globalAlpha = alpha;
-    ctx.fillStyle = PLAYER.speedBoost ? '#ffbe0b' : '#00f5ff';
-    ctx.shadowColor = PLAYER.speedBoost ? '#ffbe0b' : '#00f5ff';
-    ctx.shadowBlur = 8;
-    ctx.fillRect(t.x - size/2, t.y - size/2, size, size);
-    ctx.restore();
-  }
-
-  // Player
-  const px = PLAYER.x, py = PLAYER.y, pw = PLAYER.w, ph = PLAYER.h;
-  const blinkOk = !PLAYER.invincible || (frame % 6 < 3);
-
-  if (blinkOk) {
-    ctx.save();
-    // Glow
-    ctx.shadowColor = PLAYER.shield ? '#06d6a0' : PLAYER.speedBoost ? '#ffbe0b' : '#00f5ff';
-    ctx.shadowBlur = 20;
-
-    // Body gradient
-    const pg = ctx.createLinearGradient(px, py, px+pw, py+ph);
-    if (PLAYER.shield) { pg.addColorStop(0,'#06d6a0'); pg.addColorStop(1,'#00b894'); }
-    else if (PLAYER.speedBoost) { pg.addColorStop(0,'#ffbe0b'); pg.addColorStop(1,'#ff9500'); }
-    else { pg.addColorStop(0,'#00f5ff'); pg.addColorStop(1,'#0080ff'); }
-    ctx.fillStyle = pg;
-
-    // Draw cube with slight rotation feel
-    ctx.save();
-    ctx.translate(px + pw/2, py + ph/2);
-    ctx.rotate(Math.sin(frame * 0.15) * 0.12);
-    ctx.fillRect(-pw/2, -ph/2, pw, ph);
-
-    // Highlight
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.fillRect(-pw/2 + 3, -ph/2 + 3, pw*0.4, ph*0.25);
-
-    // Eye
-    ctx.fillStyle = '#000820';
-    ctx.fillRect(pw*0.1, -ph*0.05, pw*0.25, ph*0.2);
-    ctx.restore();
-
-    // Shield bubble
-    if (PLAYER.shield) {
-      ctx.strokeStyle = '#06d6a0';
-      ctx.lineWidth = 2;
-      ctx.globalAlpha = 0.5 + Math.sin(frame * 0.1) * 0.3;
-      ctx.beginPath();
-      ctx.arc(px + pw/2, py + ph/2, pw * 0.9, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-
-    ctx.restore();
-  }
-
-  // Magnet field visual
-  if (PLAYER.magnet) {
-    ctx.save();
-    ctx.strokeStyle = '#8338ec';
-    ctx.lineWidth = 1;
-    ctx.globalAlpha = 0.15 + Math.sin(frame * 0.08) * 0.1;
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath();
-    ctx.arc(px + pw/2, py + ph/2, 150, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.restore();
-  }
-}
-
-// ============================================================
-//  INPUT
-// ============================================================
-const keys = {};
-window.addEventListener('keydown', e => {
-  if (gameState !== 'playing') return;
-  if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
-    e.preventDefault();
-    jump();
-  }
-  if (e.code === 'KeyZ' || e.code === 'KeyX') {
-    shoot();
-  }
-});
-
-// Mobile
-document.getElementById('tap-left').addEventListener('touchstart', e => { e.preventDefault(); if (gameState === 'playing') jump(); }, { passive: false });
-document.getElementById('tap-right').addEventListener('touchstart', e => { e.preventDefault(); if (gameState === 'playing') shoot(); }, { passive: false });
-
-// Prevent scroll on space
-window.addEventListener('keydown', e => { if (e.code === 'Space') e.preventDefault(); });
-
-// ============================================================
-//  INIT
-// ============================================================
-showScreen('titleScreen');
-// Draw idle background
-function idleLoop() {
-  if (gameState === 'playing') return;
-  requestAnimationFrame(idleLoop);
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-  const bgG = ctx.createLinearGradient(0, 0, 0, H);
-  bgG.addColorStop(0, '#020212'); bgG.addColorStop(1, '#050525');
-  ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
-
-  // Animate stars
-  frame++;
-  for (const s of bgStars) {
-    s.x -= s.speed * 0.3;
-    if (s.x < 0) s.x = W;
-    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(200,220,255,${s.alpha})`; ctx.fill();
-  }
-}
-initBgStars();
-idleLoop();
+	// Don't show the lovable-badge if the page is in an iframe or if it's being rendered by puppeteer (screenshot service)
+	if (window.self !== window.top || navigator.userAgent.includes('puppeteer')) {
+		// the page is in an iframe
+		var badge = document.getElementById('lovable-badge');
+		if (badge) {
+			badge.style.display = 'none';
+		}
+	}
+
+	// Add click event listener to close button with animation
+	var closeButton = document.getElementById('lovable-badge-close');
+	if (closeButton) {
+		closeButton.addEventListener('click', function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			var badge = document.getElementById('lovable-badge');
+			if (badge) {
+				badge.classList.add('closing');
+				setTimeout(function() {
+					if (badge) {
+						badge.style.display = 'none';
+					}
+				}, 240);
+			}
+		});
+	}
 </script>
 </body>
 </html>
